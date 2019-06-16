@@ -1,6 +1,6 @@
 {
   "name": "material-button-base",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "material-button React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -26,6 +26,8 @@
     "clsx": "^1.0.4",
     "deepmerge": "^3.2.1",
     "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-transition-group": "^4.1.1",
     "warning": "^4.0.3"
   },
