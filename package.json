@@ -1,6 +1,6 @@
 {
   "name": "material-button-base",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "material-button React component",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -25,15 +25,18 @@
     "@material-ui/utils": "^4.1.0",
     "clsx": "^1.0.4",
     "deepmerge": "^3.2.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "react-transition-group": "^4.1.1",
     "warning": "^4.0.3"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
   "devDependencies": {
-    "nwb": "0.23.x"
+    "nwb": "0.23.x",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "author": "",
   "homepage": "",
