@@ -1,7 +1,7 @@
 {
-  "name": "material-button-base",
-  "version": "0.0.4",
-  "description": "material-button React component",
+  "name": "rippler",
+  "version": "0.0.1",
+  "description": "Material UI ripple effect as a React Component",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -43,6 +43,12 @@
   "license": "MIT",
   "repository": "",
   "keywords": [
-    "react-component"
+    "react-component",
+    "material-ui",
+    "ripple",
+    "material-ripple",
+    "button",
+    "material",
+    "material-design"
   ]
 }
