@@ -17,7 +17,8 @@
     "start": "nwb serve-react-demo",
     "test": "nwb test-react",
     "test:coverage": "nwb test-react --coverage",
-    "test:watch": "nwb test-react --server"
+    "test:watch": "nwb test-react --server",
+    "lbuild": "yarn add --dev react react-dom && yarn build && yarn remove react react-dom"
   },
   "dependencies": {
     "@material-ui/styles": "^4.1.1",

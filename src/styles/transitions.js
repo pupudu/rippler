@@ -1,7 +1,5 @@
 /* eslint-disable no-restricted-globals */
 
-import warning from 'warning';
-
 // Follow https://material.google.com/motion/duration-easing.html#duration-easing-natural-easing-curves
 // to learn the context in which each easing should be used.
 export const easing = {
@@ -51,27 +49,8 @@ export default {
     const {
       duration: durationOption = duration.standard,
       easing: easingOption = easing.easeInOut,
-      delay = 0,
-      ...other
+      delay = 0
     } = options;
-
-    warning(
-      isString(props) || Array.isArray(props),
-      'Material-UI: argument "props" must be a string or Array.',
-    );
-    warning(
-      isNumber(durationOption) || isString(durationOption),
-      `Material-UI: argument "duration" must be a number or a string but found ${durationOption}.`,
-    );
-    warning(isString(easingOption), 'Material-UI: argument "easing" must be a string.');
-    warning(
-      isNumber(delay) || isString(delay),
-      'Material-UI: argument "delay" must be a number or a string.',
-    );
-    warning(
-      Object.keys(other).length === 0,
-      `Material-UI: unrecognized argument(s) [${Object.keys(other).join(',')}]`,
-    );
 
     return (Array.isArray(props) ? props : [props])
       .map(

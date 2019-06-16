@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
-import { useForkRef } from '../utils2/reactHelpers';
-import withStyles from '../styles2/withStyles';
+import withStyles from '../styles/withStyles';
 import NoSsr from '../NoSsr';
-import { useIsFocusVisible } from '../utils2/focusVisible';
+import { useIsFocusVisible } from '../utils/focusVisible';
 import TouchRipple from './TouchRipple';
 
 export const styles = {
@@ -27,6 +26,7 @@ export const styles = {
       pointerEvents: 'none', // Disable link interactions
       cursor: 'default',
     },
+    boxShadow: 'none'
   },
   /* Pseudo-class applied to the root element if `disabled={true}`. */
   disabled: {},
@@ -53,18 +53,15 @@ function useEventCallback(fn) {
  * It aims to be a simple building block for creating a button.
  * It contains a load of style reset and some focus/ripple logic.
  */
-const ButtonBase = React.forwardRef(function ButtonBase(props, ref) {
+const ButtonBase = function ButtonBase(props) {
   const {
     action,
-    buttonRef: buttonRefProp,
     centerRipple = false,
     children,
     classes = {},
     className: classNameProp,
     component = 'span',
     disabled,
-    disableRipple = false,
-    disableTouchRipple = false,
     focusRipple = false,
     focusVisibleClassName,
     onBlur,
@@ -98,7 +95,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(props, ref) {
   if (disabled && focusVisible) {
     setFocusVisible(false);
   }
-  const { isFocusVisible, onBlurVisible, ref: focusVisibleRef } = useIsFocusVisible();
+  const { isFocusVisible, onBlurVisible } = useIsFocusVisible();
 
   React.useImperativeHandle(
     action,
@@ -117,13 +114,13 @@ const ButtonBase = React.forwardRef(function ButtonBase(props, ref) {
     }
   }, [focusRipple, focusVisible]);
 
-  function useRippleHandler(rippleAction, eventCallback, skipRippleAction = disableTouchRipple) {
+  function useRippleHandler(rippleAction, eventCallback) {
     return useEventCallback(event => {
       if (eventCallback) {
         eventCallback(event);
       }
 
-      const ignore = event.defaultPrevented || skipRippleAction;
+      const ignore = event.defaultPrevented;
       if (!ignore && rippleRef.current) {
         rippleRef.current[rippleAction](event);
       }
@@ -243,10 +240,6 @@ const ButtonBase = React.forwardRef(function ButtonBase(props, ref) {
 
   let ComponentProp = component;
 
-  const handleUserRef = useForkRef(buttonRefProp, ref);
-  const handleOwnRef = useForkRef(focusVisibleRef, buttonRef);
-  const handleRef = useForkRef(handleUserRef, handleOwnRef);
-
   return (
     <ComponentProp
       className={className}
@@ -262,7 +255,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(props, ref) {
       onTouchEnd={handleTouchEnd}
       onTouchMove={handleTouchMove}
       onTouchStart={handleTouchStart}
-      ref={handleRef}
+      // ref={handleRef}
       tabIndex={disabled ? -1 : tabIndex}
       {...other}
     >
@@ -275,7 +268,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(props, ref) {
       ) : null}
     </ComponentProp>
   );
-});
+};
 
 ButtonBase.propTypes = {
   /**
@@ -287,11 +280,6 @@ ButtonBase.propTypes = {
    * that can be triggered programmatically.
    */
   action: PropTypes.func,
-  /**
-   * Use that property to pass a ref callback to the native button component.
-   * @deprecated Use `ref` instead
-   */
-  buttonRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   /**
    * If `true`, the ripples will be centered.
    * They won't start at the cursor interaction position.
@@ -314,13 +302,6 @@ ButtonBase.propTypes = {
    * If `true`, the base button will be disabled.
    */
   disabled: PropTypes.bool,
-  /**
-   * If `true`, the ripple effect will be disabled.
-   *
-   * ⚠️ Without a ripple there is no styling for :focus-visible by default. Be sure
-   * to highlight the element by applying separate styles with the `focusVisibleClassName`.
-   */
-  disableTouchRipple: PropTypes.bool,
   /**
    * If `true`, the base button will have a keyboard focus ripple.
    * `disableRipple` must also be `false`.
